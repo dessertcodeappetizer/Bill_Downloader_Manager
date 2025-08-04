@@ -1,0 +1,4 @@
+2025-07-20 22:27:58,295 - INFO - Executing under authentication_gmail() of Email_Manipulation class.
+2025-07-20 22:27:58,295 - INFO - No valid credentials found, initiating login flow.
+2025-07-20 22:27:58,295 - INFO - No credentials found. Using credentials.json for authentication.
+2025-07-20 22:28:15,955 - INFO - Saving credentials for the next run
