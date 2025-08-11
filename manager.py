@@ -41,6 +41,16 @@ class ConfigReader:
         con_dict["query"] = config["production"]["query"]
         con_dict["save_folder"] = config["production"]["save_folder"]
         return con_dict
+    
+    def user_custom(self, con_dict):
+        """This function is responsible for changing config data as per the user requirements."""
+        days_ip = input("Enter the no. of days you want your bill processed: ")
+        fol_loc = input("Enter the folder path: ")
+        if days_ip != "":
+            con_dict["query"] = con_dict["query"].replace(con_dict["query"][-2], days_ip)
+        if fol_loc != "":
+            con_dict["bill_location"] = fol_loc + '/'
+        return con_dict
 
 
 class Logger:
@@ -100,7 +110,7 @@ class Email_Manipulation:
             logger.error(f'An error occurred: {error}')
             return []
 
-    def get_attachments(self, service, msg_id, save_folder, logger):
+    def get_attachments(self, service, msg_id, logger, bill_path):
         logger.info("Executing under get_attachments function of Email_Manipulation class.")
         try:
             logger.info("Trying to get the attachment and download.")
@@ -120,12 +130,17 @@ class Email_Manipulation:
                         ).execute()
                         data = attachment.get("data")
                     file_data = base64.urlsafe_b64decode(data.encode("UTF-8"))
-                    path = os.path.join(save_folder, filename)
+                    path = os.path.join(bill_path, filename)
                     with open(path, "wb") as f:
                         f.write(file_data)
                     logger.info(f"Downloaded: {filename}")
                     print(f"Downloaded: {filename}")
+                    # time_date = datetime.datetime.now().strftime('%Y%m%d_%H%M%S_%f')[:-3]
+                    # rename_file_name = f"Bill_{time_date}.pdf"
+                    # os.rename(bill_path + filename, bill_path + rename_file_name)
+                    # logger.info(f"File renamed from {filename} to {rename_file_name}")
                     counter += 1
+                    break
             logger.info(f"No. of files downloaded: {counter}")
         except HttpError as error:
             logger.error(f"An error occurred: {error}")
@@ -153,6 +168,7 @@ class Filter:
     def image_or_text(self, file_paths):
         """Bufurcating wrt image and text based pdf."""
         self.log.info("Executing under image_or_text() of Filter class.")
+        print("Processing the downloaded pdf.")
         image, texts = [], []
         for pdf_path in file_paths:
             doc = fitz.open(pdf_path)
@@ -217,6 +233,7 @@ class Ai_modulator:
         
     def ask_ai(self):
         self.log.info("Executing under ask_ai() of Ai_modulator class.")
+        print("Initiating AI agent to fetch the details from the pdf. It may take a while...")
         url = self.ai_url
         headers = {
             "Authorization": f"Bearer {self.api_key}",
@@ -229,6 +246,7 @@ class Ai_modulator:
             ],
             "temperature": 0.2
         }
+        print("Thanks for your patience!!!")
         try:
             response = requests.post(url, headers=headers, json=payload)
             if response.status_code == 200:
@@ -241,7 +259,7 @@ class Ai_modulator:
                 print("Terminating!")
                 sys.exit()
         except Exception as error:
-            self.log.error(f"Getting error as: {error}")
+            self.log.error(f"Getting error as in ask_ai function: {error}")
             print("Terminating!")
         
     
@@ -255,23 +273,25 @@ class Writer:
     def csv_writer(self):
         """CSV writing"""
         self.log.info("Executing under csv_writer() of Writer class.")
-        # try:
-        dtime = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]
-        data = json.loads(self.ai_data)
-        print(f"No. of bills getting written into CSV: {len(data)}")
-        self.log.info(f"No. of bills getting written into CSV: {len(data)}")
-        df = pandas.DataFrame(data)
-        df["Expanse_Date"] = pandas.to_datetime(df["Expanse_Date"], format="%d/%m/%Y", errors='coerce')
-        df.to_csv(f"{self.excel}Bill_{dtime}.csv", index=False)
-        self.log.info("File writing successful!")
-        print("Success!!!")
-        # except Exception as error:
-        #     self.log.error(f"Getting error while writing file: {error}")
+        try:
+            dtime = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]
+            data = json.loads(self.ai_data)
+            print(f"No. of bills getting written into CSV: {len(data)}")
+            self.log.info(f"No. of bills getting written into CSV: {len(data)}")
+            df = pandas.DataFrame(data)
+            df["Expanse_Date"] = pandas.to_datetime(df["Expanse_Date"], format="%d/%m/%Y", errors='coerce')
+            df.to_csv(f"{self.excel}Bill_{dtime}.csv", index=False)
+            self.log.info("File writing successful!")
+            print(f"CSV writing at {self.excel} Success!!!")
+        except Exception as error:
+            raise f"Getting error while writing file: {error} Unsuccessful!!!"
+            # self.log.error(f"Getting error while writing file: {error}")
  
         
 def main():
     object1 = ConfigReader("config.ini")
     res1 = object1.config_read()
+    res1 = object1.user_custom(res1)
     object2 = Logger(res1)
     res2 = object2.log()
     object3 = Email_Manipulation()
@@ -279,7 +299,7 @@ def main():
     res4 = build('gmail', 'v1', credentials=res3)
     res5 = object3.search_emails(res4, res1["query"], res2)
     for msg in res5:
-        object3.get_attachments(res4, msg['id'], res1["save_folder"], res2)
+        object3.get_attachments(res4, msg['id'], res2, res1["bill_location"])
         time.sleep(1)
     object4 = Filter(res1, res2)
     image, text = object4.image_or_text(object4.bill_path_generator())

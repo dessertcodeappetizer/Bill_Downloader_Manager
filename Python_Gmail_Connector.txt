@@ -1,0 +1,53 @@
+How to connect python application with gmail.
+
+✅ Step-by-Step: How to Get credentials.json from Google Cloud Console
+1. 🔗 Go to the Google Cloud Console
+Open this link in your browser:
+👉 https://console.cloud.google.com/
+
+2. 📁 Create a New Project (or select an existing one)
+Click on the project selector dropdown at the top.
+
+Click "New Project".
+
+Give it a name (e.g., GmailReaderProject) and click Create.
+
+Once created, select that project.
+
+3. ⚙️ Enable Gmail API
+In the left menu, click APIs & Services > Library
+
+Search for "Gmail API"
+
+Click "Gmail API"
+
+Click "Enable"
+
+4. 🔐 Create OAuth Credentials
+Go to APIs & Services > Credentials
+
+Click "Create Credentials" > OAuth client ID
+
+If it prompts you to set up the OAuth consent screen, follow these:
+
+🧾 OAuth Consent Screen Setup:
+Choose "External", click Create
+
+App name: anything (e.g., My Gmail App)
+
+User support email: your Gmail
+
+Developer contact: your Gmail
+
+Save and Continue (you can skip scopes for now)
+
+In Test Users, add your Gmail address (the one you'll log in with)
+
+Then, go back and proceed to Create OAuth client ID:
+
+🛠 Now Create OAuth Client ID:
+Application Type: Desktop App
+
+Name: (e.g., Gmail Desktop App)
+
+Click Create

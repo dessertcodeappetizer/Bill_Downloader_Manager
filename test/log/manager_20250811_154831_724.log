@@ -1,0 +1,24 @@
+2025-08-11 15:48:31,727 - INFO - Executing under authentication_gmail() of Email_Manipulation class.
+2025-08-11 15:48:31,728 - INFO - Token found!
+2025-08-11 15:48:31,756 - INFO - No valid credentials found, initiating login flow.
+2025-08-11 15:48:31,756 - INFO - Credentials Expired! Refreshing!!!
+2025-08-11 15:48:32,054 - INFO - Saving credentials for the next run
+2025-08-11 15:48:32,063 - INFO - Executing under search_email() function of Email_Manipulation class.
+2025-08-11 15:48:32,990 - INFO - Executing under get_attachments function of Email_Manipulation class.
+2025-08-11 15:48:32,991 - INFO - Trying to get the attachment and download.
+2025-08-11 15:48:33,710 - INFO - Downloaded: Order_ID_7154798030.pdf
+2025-08-11 15:48:33,710 - INFO - No. of files downloaded: 1
+2025-08-11 15:48:34,712 - INFO - Executing under get_attachments function of Email_Manipulation class.
+2025-08-11 15:48:34,712 - INFO - Trying to get the attachment and download.
+2025-08-11 15:48:35,353 - INFO - Downloaded: Order_ID_7144810183.pdf
+2025-08-11 15:48:35,353 - INFO - No. of files downloaded: 1
+2025-08-11 15:48:36,354 - INFO - Executing under bill_path_generator() of Filter class.
+2025-08-11 15:48:36,355 - INFO - Available bills are: ['/Projects/Personal_Projects/Running/Bill_Manager/bills/Order_ID_7144810183.pdf', '/Projects/Personal_Projects/Running/Bill_Manager/bills/Order_ID_7154798030.pdf']
+2025-08-11 15:48:36,355 - INFO - Available bill count: 2
+2025-08-11 15:48:36,356 - INFO - Executing under image_or_text() of Filter class.
+2025-08-11 15:48:36,521 - INFO - Path of image based pdf are: []
+2025-08-11 15:48:36,522 - INFO - Path of text based pdf are: ['/Projects/Personal_Projects/Running/Bill_Manager/bills/Order_ID_7144810183.pdf', '/Projects/Personal_Projects/Running/Bill_Manager/bills/Order_ID_7154798030.pdf']
+2025-08-11 15:48:36,522 - INFO - Executing under reader_pypdf2() of Reader class.
+2025-08-11 15:48:36,619 - INFO - Executing under reader_pytesseract() of Reader class.
+2025-08-11 15:48:36,619 - INFO - Executing under ask_ai() of Ai_modulator class.
+2025-08-11 15:51:31,713 - INFO - Executing under csv_writer() of Writer class.

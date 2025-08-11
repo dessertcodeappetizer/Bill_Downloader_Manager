@@ -1,0 +1,41 @@
+2025-08-11 16:10:05,322 - INFO - Executing under authentication_gmail() of Email_Manipulation class.
+2025-08-11 16:10:05,323 - INFO - Token found!
+2025-08-11 16:10:05,341 - INFO - Executing under search_email() function of Email_Manipulation class.
+2025-08-11 16:10:05,875 - INFO - Executing under get_attachments function of Email_Manipulation class.
+2025-08-11 16:10:05,875 - INFO - Trying to get the attachment and download.
+2025-08-11 16:10:06,595 - INFO - Downloaded: Order_ID_7154798030.pdf
+2025-08-11 16:10:06,596 - INFO - No. of files downloaded: 1
+2025-08-11 16:10:07,597 - INFO - Executing under get_attachments function of Email_Manipulation class.
+2025-08-11 16:10:07,599 - INFO - Trying to get the attachment and download.
+2025-08-11 16:10:08,203 - INFO - Downloaded: Order_ID_7144810183.pdf
+2025-08-11 16:10:08,203 - INFO - No. of files downloaded: 1
+2025-08-11 16:10:09,205 - INFO - Executing under bill_path_generator() of Filter class.
+2025-08-11 16:10:09,208 - INFO - Available bills are: ['/Projects/Personal_Projects/Running/Bill_Manager/bills/bill_5_8_to_11_8/Order_ID_7144810183.pdf', '/Projects/Personal_Projects/Running/Bill_Manager/bills/bill_5_8_to_11_8/Order_ID_7154798030.pdf']
+2025-08-11 16:10:09,208 - INFO - Available bill count: 2
+2025-08-11 16:10:09,208 - INFO - Executing under image_or_text() of Filter class.
+2025-08-11 16:10:09,347 - INFO - Path of image based pdf are: []
+2025-08-11 16:10:09,347 - INFO - Path of text based pdf are: ['/Projects/Personal_Projects/Running/Bill_Manager/bills/bill_5_8_to_11_8/Order_ID_7144810183.pdf', '/Projects/Personal_Projects/Running/Bill_Manager/bills/bill_5_8_to_11_8/Order_ID_7154798030.pdf']
+2025-08-11 16:10:09,348 - INFO - Executing under reader_pypdf2() of Reader class.
+2025-08-11 16:10:09,418 - INFO - Executing under reader_pytesseract() of Reader class.
+2025-08-11 16:10:09,418 - INFO - Executing under ask_ai() of Ai_modulator class.
+2025-08-11 16:13:05,073 - INFO - Getting result from AI as: [
+  {
+    "Sl.No.": 1,
+    "Expanse_Amount": "264.27",
+    "Expanse_Date": "07/08/2025",
+    "Expanse_Type": "Meals",
+    "Expanse_Description": "Merchant Name: Zomato, Seller name: Burger King",
+    "Expanse_Receipt": "/Projects/Personal_Projects/Running/Bill_Manager/bills/bill_5_8_to_11_8/Order_ID_7144810183.pdf"
+  },
+  {
+    "Sl.No.": 2,
+    "Expanse_Amount": "179.80",
+    "Expanse_Date": "10/08/2025",
+    "Expanse_Type": "Meals",
+    "Expanse_Description": "Merchant Name: Zomato, Seller name: Maharashtrian Bhakri",
+    "Expanse_Receipt": "/Projects/Personal_Projects/Running/Bill_Manager/bills/bill_5_8_to_11_8/Order_ID_7154798030.pdf"
+  }
+]
+2025-08-11 16:13:05,075 - INFO - Executing under csv_writer() of Writer class.
+2025-08-11 16:13:05,076 - INFO - No. of bills getting written into CSV: 2
+2025-08-11 16:13:05,134 - INFO - File writing successful!
